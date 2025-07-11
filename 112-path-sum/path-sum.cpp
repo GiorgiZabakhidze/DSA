@@ -11,6 +11,12 @@
  */
 class Solution {
 public:
+    Solution() {
+        ios_base::sync_with_stdio(0);
+        cin.tie(nullptr);
+        cout.tie(nullptr);
+    }
+    
     bool hasPathSum(TreeNode* root, int targetSum) {
         if(!root)
             return false;
