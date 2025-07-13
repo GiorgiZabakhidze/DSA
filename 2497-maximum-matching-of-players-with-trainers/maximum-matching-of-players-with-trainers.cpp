@@ -9,11 +9,9 @@ public:
         while(i < n && j < m) {
             if(players[i] <= trainers[j]) {
                 ++i;
-                ++j;
                 ++ans;
-            }else {
-                ++j;
             }
+            ++j;
         }
         return ans;
     }
