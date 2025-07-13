@@ -21,7 +21,7 @@ private:
             char c = s[i];
             if(islower(c)) {
                 --len;
-                if(k == len)
+                if(k == len) // answer will always return from here as this is the starting point for any letter
                     return c;
             }else if(c == '*') {
                 if(len > 0)
@@ -35,6 +35,6 @@ private:
                 k = (len - k - 1);
             }
         }
-        return char('?');
+        return char('?'); // what the helly?
     }
 };
