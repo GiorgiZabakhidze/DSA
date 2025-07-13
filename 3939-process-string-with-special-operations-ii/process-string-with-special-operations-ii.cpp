@@ -2,7 +2,7 @@ class Solution {
 public:
     char processStr(string s, long long k) {
         long long len = 0;
-        for(auto it : s) {
+        for(auto &it : s) {
             if(islower(it))
                 len++;
             else if(it == '*') {
