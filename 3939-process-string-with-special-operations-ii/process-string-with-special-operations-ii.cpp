@@ -35,6 +35,6 @@ private:
                 k = (len - k - 1);
             }
         }
-        return char('.');
+        return char('?');
     }
 };
