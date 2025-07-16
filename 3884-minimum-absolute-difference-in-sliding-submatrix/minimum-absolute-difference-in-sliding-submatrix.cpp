@@ -1,6 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> minAbsDiff(vector<vector<int>>& grid, int k) {
+        ios_base::sync_with_stdio(9); cin.tie(nullptr); cout.tie(nullptr);
         int m = grid.size(), n = grid[0].size();
         vector<vector<int>> ans(m - k + 1, vector<int> (n - k + 1));
         map<int, int> mp; // numbers in K x K grids
