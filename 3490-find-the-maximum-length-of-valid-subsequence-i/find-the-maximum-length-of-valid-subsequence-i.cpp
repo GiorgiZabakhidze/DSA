@@ -1,17 +1,18 @@
 class Solution {
 public:
     int maximumLength(vector<int>& nums) {
-        int res = 0;
-        vector<vector<int>> patterns = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-        for (auto& pattern : patterns) {
-            int cnt = 0;
-            for (int num : nums) {
-                if (num % 2 == pattern[cnt % 2]) {
-                    cnt++;
-                }
+        int res = 0, n = nums.size();
+
+        int odd = 0, even = 0, alternate = 1, prev = nums[0];
+        for(int i = 0; i < n; i++){
+            if(nums[i] % 2 == 1) odd++;
+            else even++;
+
+            if(i >= 1 && nums[i] % 2 != prev % 2){
+                alternate++;
+                prev = nums[i];
             }
-            res = max(res, cnt);
         }
-        return res;
+        return max({odd, even, alternate});
     }
 };
