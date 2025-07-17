@@ -6,8 +6,8 @@ public:
         for(auto &it : nums) {
             it %= k;
             for(int prev = 0; prev < k; ++prev) {
-                dp[it][prev] = dp[prev][it] + 1;
-                ans = max(ans, dp[it][prev]);
+                dp[prev][it] = dp[it][prev] + 1;
+                ans = max(ans, dp[prev][it]);
             }
         }
         return ans;
