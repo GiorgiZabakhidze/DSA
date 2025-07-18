@@ -1,6 +1,7 @@
 class Solution {
 public:
     long long minimumDifference(vector<int>& nums) {
+        ios_base::sync_with_stdio(0); cin.tie(nullptr); cout.tie(nullptr);
         int n = nums.size() / 3;
         vector<long long> left_sums(n + 1, 0);
         priority_queue<int> pq;
