@@ -22,58 +22,43 @@ public:
             }
         }
 
-        // hash table records the occurrence times of each serialized
-        // representation
         unordered_map<string, int> freq;
-        // post-order traversal based on depth-first search, calculate the
-        // serialized representation of each node structure
-        function<void(Trie*)> construct = [&](Trie* node) {
-            // if it is a leaf node, then the serialization is represented as an
-            // empty string, and no operation is required.
-            if (node->children.empty()) {
-                return;
-            }
-
-            vector<string> v;
-            // if it is not a leaf node, the serialization representation of the
-            // child node structure needs to be calculated first.
-            for (const auto& [folder, child] : node->children) {
-                construct(child);
-                v.push_back(folder + "(" + child->serial + ")");
-            }
-            // to prevent issues with order, sorting is needed
-            sort(v.begin(), v.end());
-            for (string& s : v) {
-                node->serial += move(s);
-            }
-            // add to hash table
-            ++freq[node->serial];
-        };
-
-        construct(root);
+        construct(root, freq);
 
         vector<vector<string>> ans;
-        // record the path from the root node to the current node.
         vector<string> path;
+        operate(root, freq, ans, path);
 
-        function<void(Trie*)> operate = [&](Trie* node) {
-            // if the serialization appears more than once in the hash table, it
-            // needs to be deleted.
-            if (freq[node->serial] > 1) {
-                return;
-            }
-            // otherwise add the path to the answer
-            if (!path.empty()) {
-                ans.push_back(path);
-            }
-            for (const auto& [folder, child] : node->children) {
-                path.push_back(folder);
-                operate(child);
-                path.pop_back();
-            }
-        };
-
-        operate(root);
         return ans;
+    }
+private:
+    void construct(Trie* node, unordered_map<string, int>& freq) {
+        if (node->children.empty()) 
+            return;
+
+        vector<string> v;
+        for (const auto& [folder, child] : node->children) {
+            construct(child, freq);
+            v.push_back(folder + "(" + child->serial + ")");
+        }
+        sort(v.begin(), v.end());
+        for (string& s : v) {
+            node->serial += move(s);
+        }
+        ++freq[node->serial];
+    }
+
+    void operate(Trie* node, unordered_map<string, int>& freq, vector<vector<string>>& ans, vector<string>& path) {
+        if (freq[node->serial] > 1) 
+            return;
+
+        if (!path.empty()) 
+            ans.push_back(path);
+
+        for (const auto& [folder, child] : node->children) {
+            path.push_back(folder);
+            operate(child, freq, ans, path);
+            path.pop_back();
+        }
     }
 };
