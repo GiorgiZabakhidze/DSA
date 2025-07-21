@@ -5,14 +5,15 @@ private:
             return 0;
         if(memo[idx][buying] != -1)
             return memo[idx][buying];
+
+        int bought = find(prices, idx + 1, !buying, memo);
+        int skipped = find(prices, idx + 1, buying, memo);
         
         if(buying) {
-            return memo[idx][buying] = max(-prices[idx] + find(prices, idx + 1, !buying, memo), 
-                                            find(prices, idx + 1, buying, memo));
+            return memo[idx][buying] = max(-prices[idx] + bought, skipped);
         }
         //else
-        return memo[idx][buying] = max(prices[idx] + find(prices, idx + 1, !buying, memo), 
-                                            find(prices, idx + 1, buying, memo));
+        return memo[idx][buying] = max(prices[idx] + bought, skipped);
     }
 public:
     int maxProfit(vector<int>& prices) {
